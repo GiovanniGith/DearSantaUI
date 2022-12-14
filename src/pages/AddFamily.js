@@ -1,22 +1,16 @@
-import React, { useRef, useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useRef } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 
-export default function AddFamily({ SetFamilyId }) {
-  const [families, setFamily] = useState([]);
+export default function AddFamily() {
+  const history = useHistory();
   const newFamName = useRef();
 
-  useEffect(() => {
-    fetch('https://localhost:7041/api/Family')
-      .then((res) => res.json())
-      .then(setFamily);
-  }, []);
+  const CreateFamily = async (e) => {
+    e.preventDefault();
 
-  const CreateFamily = () => {
     const newFam = {
-      FamilyId: families.length + 1,
-      FamilyName: newFamName,
+      FamilyName: newFamName.current.value,
     };
-    SetFamilyId(newFam.FamilyId);
 
     const fetchOption = {
       method: 'POST',
@@ -26,23 +20,24 @@ export default function AddFamily({ SetFamilyId }) {
       body: JSON.stringify(newFam),
     };
 
-    return fetch('http://localhost:7041/api/Family', fetchOption).then();
+    const res = await fetch('https://localhost:7041/api/Family', fetchOption);
+    await res.json();
+    history.push('/AddFamilyMember');
   };
 
   return (
     <>
-      <h1> Welcome to DearSanta</h1>
-      <p>Enter Family Name</p>
-      <input type="text" ref={newFamName} />
-      <Link to="/AddFamilyMember" onClick={CreateFamily}>
-        Register Family
-      </Link>
-      <div>
-        {families.map((fam) => (
-          <div>
-            <p>{fam.FamilyName}</p>
-          </div>
-        ))}
+      <div className="text-center mt-5">
+        <h1>Family Name</h1>
+        <form>
+          <label htmlFor="FamilyName"> </label> <br />
+          <input type="text" ref={newFamName} />
+        </form>{' '}
+        <br />
+        <Link to="/AllFamilies">View Families</Link>
+        <Link to="/AddFamilyMember" onClick={CreateFamily}>
+          Register Family
+        </Link>
       </div>
     </>
   );

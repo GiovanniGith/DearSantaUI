@@ -1,4 +1,5 @@
 import React from 'react';
+import NavBar from '../components/NavBar';
 import Loading from '../components/Loading';
 import LogIn from '../pages/LogIn';
 import Routes from '../routes';
@@ -12,7 +13,18 @@ function Initialize() {
     return <Loading />;
   }
 
-  return <>{user ? <Routes user={user} /> : <LogIn />}</>;
+  return (
+    <>
+      {user ? (
+        <>
+          {' '}
+          <NavBar /> <Routes user={user} />{' '}
+        </>
+      ) : (
+        <LogIn />
+      )}
+    </>
+  );
 }
 
 export default Initialize;
