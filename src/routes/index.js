@@ -8,9 +8,13 @@ import AddWishListItem from '../pages/AddWishListItem';
 import AllFamilies from '../pages/AllFamilies';
 import UserProfile from '../pages/UserProfile';
 import FamilyView from '../pages/FamilyView';
+import FamilyMember from '../pages/FamilyMember';
+import WishListItem from '../pages/WishListItem';
 
 export default function Routes({ user }) {
   const [famId, setFamId] = useState();
+  const [memId, setMemId] = useState();
+  const [itemId, setItemId] = useState();
 
   return (
     <div>
@@ -25,18 +29,24 @@ export default function Routes({ user }) {
         <Route path="/AddWishListItem" component={() => <AddWishListItem />} />
         <Route
           path="/AllFamilies"
-          component={() => <AllFamilies setFamId={setFamId} />}
+          component={() => <AllFamilies setfamonclick={setFamId} />}
         />
         <Route
           path="/FamilyView"
-          component={() => <FamilyView famId={famId} />}
+          component={() => <FamilyView setMemId={setMemId} famId={famId} />}
         />
         <Route path="/UserProfile" component={() => <UserProfile />} />
+        <Route
+          path="/FamilyMember"
+          component={() => <FamilyMember memId={memId} setItemId={setItemId} />}
+        />
+        <Route
+          path="/WishListItem"
+          component={() => <WishListItem itemId={itemId} />}
+        />{' '}
+        */
         <Route path="*" component={() => <Home user={user} />} />
       </Switch>
     </div>
   );
 }
-/*
-<Route path="/FamilyMember" component={() => <FamilyMember />} />
-<Route path="/WishListItem" component={() => <WishListItem />} /> */

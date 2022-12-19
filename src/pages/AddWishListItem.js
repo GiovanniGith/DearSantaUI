@@ -19,8 +19,8 @@ export default function AddWishListItem() {
       ItemDescription: ItemDescription.current.value,
       ItemPrice: ItemPrice.current.value,
       ItemImage: ItemImage.current.value,
-      IsTopItem: IsTopItem.current.value,
-      IsPurchased: 0,
+      // IsTopItem: Boolean = IsTopItem.current.value ,
+      IsPurchased: false,
     };
 
     const fetchOption = {

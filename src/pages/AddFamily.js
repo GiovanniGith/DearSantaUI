@@ -34,11 +34,13 @@ export default function AddFamily() {
           <input type="text" ref={newFamName} />
         </form>{' '}
         <br />
-        <Link to="/AllFamilies">View Families</Link>
         <Link to="/AddFamilyMember" onClick={CreateFamily}>
           Register Family
         </Link>
-      </div>
+        <br />
+        <br />
+        <Link to="/AllFamilies">View Families</Link>
+      </div>{' '}
     </>
   );
 }

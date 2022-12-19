@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-export default function AllFamilies({ setFamId }) {
-  const [families, setFamily] = useState();
+export default function AllFamilies({ setfamonclick }) {
+  const [families, setFamily] = useState([]);
 
   useEffect(() => {
     fetch('https://localhost:7041/api/Family')
@@ -17,16 +17,20 @@ export default function AllFamilies({ setFamId }) {
       <h1> Families </h1>
       <div className="content">
         <div>
-          {families?.map((fam) => (
-            <div>
-              <p key={fam}>
-                {fam.familyName}{' '}
-                <button type="button" onClick={setFamId(fam.FamilyId)}>
-                  <Link to="/FamilyView">Edit Family</Link>
-                </button>
-              </p>
-            </div>
-          ))}
+          {families.length > 0
+            && families?.map((fam) => (
+              <div>
+                <p key={fam.familyId}>
+                  {fam.familyName}{' '}
+                  <button
+                    type="button"
+                    onClick={() => setfamonclick(fam.familyId)}
+                  >
+                    <Link to="/FamilyView">Edit Family</Link>
+                  </button>
+                </p>
+              </div>
+            ))}
         </div>
       </div>
     </>

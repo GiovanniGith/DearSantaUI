@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 
 export default function AddFamilyMember({ famId }) {
-  const [familyId, setFamilyId] = useState(0);
+  const [familyId, setFamilyId] = useState(1);
   const [families, setFamily] = useState([]);
   const FamilyMemberName = useRef();
   const FamilyMemberAge = useRef();
@@ -11,24 +11,20 @@ export default function AddFamilyMember({ famId }) {
 
   const [member, setMember] = useState({});
   const clickHandle = (e) => {
-    if (famId !== 0) {
-      setFamilyId(famId);
-    } else {
-      setFamilyId(e.target.value);
-    }
+    setFamilyId(e.target.value);
   };
 
   useEffect(() => {
     fetch('https://localhost:7041/api/Family')
       .then((res) => res.json())
       .then((data) => {
-        setFamily(data);
+        setFamily(Array.isArray(data) ? data : [data]);
       });
   }, []);
 
   const AddMemberToFamily = async (e) => {
     e.preventDefault();
-
+    console.log(famId);
     const newMember = {
       FamilyMemberName: FamilyMemberName.current.value,
       FamilyMemberAge: FamilyMemberAge.current.value,

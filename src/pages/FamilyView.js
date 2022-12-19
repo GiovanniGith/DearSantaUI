@@ -1,16 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 
-export default function FamilyView({ famId }) {
-  const [members, setMembers] = useState();
-  const [families, setFamily] = useState();
-
-  useEffect(() => {
-    fetch(`https://localhost:7041/api/Family/${famId}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setFamily(data);
-      });
-  }, []);
+export default function FamilyView({ famId, setMemId }) {
+  const [members, setMembers] = useState([]);
+  const history = useHistory();
 
   useEffect(() => {
     fetch(
@@ -18,30 +11,55 @@ export default function FamilyView({ famId }) {
     )
       .then((res) => res.json())
       .then((data) => {
-        setMembers(data);
+        setMembers(Array.isArray(data) ? data : [data]);
       });
   }, []);
-  console.log(members);
-  console.log(families);
+
+  const Delete = (id) => {
+    fetch(`https://localhost:7041/api/FamilyMember/${id}`, {
+      method: 'DELETE',
+    })
+      .then(history.push('/FamilyView'))
+      .then(history.go());
+  };
 
   return (
     <>
       <div>
-        <p>Family Name: </p>
-        <div>
-          {families?.map((fam) => (
+        <h1>
+          Hello{' '}
+          {Array.isArray(members) && members.length > 0
+            ? members[0].familyName
+            : ''}{' '}
+          Family!
+        </h1>
+      </div>
+      <button type="button">
+        <Link to="/AddFamilyMember">Add Member!</Link>
+      </button>
+      <br />
+      <br />
+      <div>
+        {members.length > 0
+          && members?.map((mem) => (
             <div>
-              <p key={fam}>{fam.familyName} </p>
+              <p key={mem}>
+                {mem.familyMemberName}
+                <button
+                  type="button"
+                  onClick={() => setMemId(mem.familyMemberId)}
+                >
+                  <Link to="/FamilyMember">View Profile</Link>{' '}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => Delete(mem.familyMemberId)}
+                >
+                  Delete Member
+                </button>
+              </p>
             </div>
           ))}
-        </div>
-      </div>
-      <div>
-        {members?.map((mem) => (
-          <div>
-            <p key={mem}>{mem.familyMemberName} </p>
-          </div>
-        ))}
       </div>
     </>
   );
