@@ -10,10 +10,13 @@ import UserProfile from '../pages/UserProfile';
 import FamilyView from '../pages/FamilyView';
 import FamilyMember from '../pages/FamilyMember';
 import WishListItem from '../pages/WishListItem';
+import UpdateWishListItem from '../pages/UpdateWishListItem';
+import UpdateFamilyMember from '../pages/UpdateFamilyMember';
 
 export default function Routes({ user }) {
   const [famId, setFamId] = useState();
-  const [memId, setMemId] = useState();
+  const [member, setMember] = useState();
+  const [item, setItem] = useState({});
   const [itemId, setItemId] = useState();
 
   return (
@@ -24,27 +27,39 @@ export default function Routes({ user }) {
         <Route
           exact
           path="/AddFamilyMember"
-          component={() => <AddFamilyMember famId={famId} />}
+          component={() => <AddFamilyMember setMember={setMember} />}
         />
-        <Route path="/AddWishListItem" component={() => <AddWishListItem />} />
+        <Route
+          path="/AddWishListItem"
+          component={() => <AddWishListItem member={member} />}
+        />
         <Route
           path="/AllFamilies"
           component={() => <AllFamilies setfamonclick={setFamId} />}
         />
         <Route
           path="/FamilyView"
-          component={() => <FamilyView setMemId={setMemId} famId={famId} />}
+          component={() => <FamilyView setMember={setMember} famId={famId} />}
         />
         <Route path="/UserProfile" component={() => <UserProfile />} />
         <Route
           path="/FamilyMember"
-          component={() => <FamilyMember memId={memId} setItemId={setItemId} />}
+          component={() => (
+            <FamilyMember member={member} setItemId={setItemId} />
+          )}
         />
         <Route
           path="/WishListItem"
-          component={() => <WishListItem itemId={itemId} />}
-        />{' '}
-        */
+          component={() => <WishListItem itemId={itemId} setItem={setItem} />}
+        />
+        <Route
+          path="/UpdateWishListItem"
+          component={() => <UpdateWishListItem item={item} setItem={setItem} />}
+        />
+        <Route
+          path="/UpdateFamilyMember"
+          component={() => <UpdateFamilyMember member={member} />}
+        />
         <Route path="*" component={() => <Home user={user} />} />
       </Switch>
     </div>

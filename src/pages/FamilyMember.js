@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 
-export default function FamilyMember({ memId, setItemId }) {
+export default function FamilyMember({ member, setItemId }) {
   const [famMember, setFamilyMember] = useState([]);
   const history = useHistory();
 
   useEffect(() => {
     fetch(
-      `https://localhost:7041/api/FamilyMember/GetWishListByFamilyMemberId/${memId}`,
+      `https://localhost:7041/api/FamilyMember/GetWishListByFamilyMemberId/${member.familyMemberId}`,
     )
       .then((res) => res.json())
       .then((data) => {
@@ -15,6 +15,7 @@ export default function FamilyMember({ memId, setItemId }) {
         setFamilyMember(data);
       });
   }, []);
+
   const Delete = (id) => {
     fetch(`https://localhost:7041/api/WishListItem/${id}`, {
       method: 'DELETE',
@@ -22,18 +23,39 @@ export default function FamilyMember({ memId, setItemId }) {
       .then(history.push('/AllFamilies'))
       .then(history.go());
   };
+
+  const setItemDetails = (mem) => {
+    setItemId(mem.wishListItemId);
+  };
+
   return (
     <>
-      <div>
-        <h1>
-          Family Member:
+      <div className="text-center mt-5">
+        <h1>Family Member</h1>
+        <h2>{famMember.length > 0 ? famMember[0].familyMemberName : ''}</h2>
+        <p>
+          Age:{' '}
           <span>
-            {famMember.length > 0 ? famMember[0].familyMemberName : ''}
+            {famMember.length > 0 ? famMember[0].familyMemberAge : ''}
           </span>
-        </h1>
-        <button type="button">
-          <Link to="/AddWishListItem">Add to your WishList!</Link>
-        </button>{' '}
+        </p>
+        <p>
+          Gender:{' '}
+          <span>
+            {famMember.length > 0 ? famMember[0].familyMemberGender : ''}
+          </span>
+        </p>
+        <div>
+          <button type="button">
+            <Link to="/UpdateFamilyMember">Update Family Member</Link>
+          </button>
+        </div>
+        <br />
+        <div>
+          <button type="button">
+            <Link to="/AddWishListItem">Add Item to your WishList</Link>
+          </button>
+        </div>
         <br />
         <br />
         <div>
@@ -41,11 +63,8 @@ export default function FamilyMember({ memId, setItemId }) {
             && famMember.map((mem) => (
               <p>
                 {mem.itemName} ${mem.itemPrice}
-                <button
-                  type="button"
-                  onClick={() => setItemId(mem.wishListItemId)}
-                >
-                  <Link to="/WishListItem">Edit WishList Item</Link>{' '}
+                <button type="button" onClick={() => setItemDetails(mem)}>
+                  <Link to="/WishListItem">View Item</Link>{' '}
                 </button>
                 <button
                   type="button"

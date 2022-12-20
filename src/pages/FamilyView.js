@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 
-export default function FamilyView({ famId, setMemId }) {
+export default function FamilyView({ famId, setMember }) {
   const [members, setMembers] = useState([]);
   const history = useHistory();
 
@@ -19,7 +19,7 @@ export default function FamilyView({ famId, setMemId }) {
     fetch(`https://localhost:7041/api/FamilyMember/${id}`, {
       method: 'DELETE',
     })
-      .then(history.push('/FamilyView'))
+      .then(history.push('/AllFamilies'))
       .then(history.go());
   };
 
@@ -45,10 +45,7 @@ export default function FamilyView({ famId, setMemId }) {
             <div>
               <p key={mem}>
                 {mem.familyMemberName}
-                <button
-                  type="button"
-                  onClick={() => setMemId(mem.familyMemberId)}
-                >
+                <button type="button" onClick={() => setMember(mem)}>
                   <Link to="/FamilyMember">View Profile</Link>{' '}
                 </button>
                 <button

@@ -1,32 +1,40 @@
 import React, { useState, useEffect } from 'react';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-export default function WishlistItem({ itemId }) {
-  const [item, setItem] = useState({});
+export default function WishlistItem({ itemId, setItem }) {
+  const [WSItem, setWSItem] = useState({});
   console.log(itemId);
 
   useEffect(() => {
-    fetch(`https://localhost:7041/api/WishlistItem/${itemId}`)
+    fetch(`https://localhost:7041/api/WishlistItem/${itemId} `)
       .then((res) => res.json())
       .then((data) => {
-        setItem(data);
+        setWSItem(data);
       });
   }, []);
 
   const ItemImage = (
     <div>
-      <img alt="GenericGiftImage" src={item.itemImage} />
+      <img
+        alt="GenericGiftImage"
+        src={WSItem.itemImage ? WSItem.itemImage : ''}
+      />
     </div>
   );
 
   return (
-    <div>
-      <h1>WishList Item: {item.itemName}</h1>
-      {ItemImage}
-      <p>Price: {item.itemPrice}</p>
-      <p>Any preferences? -- {item.itemDescription}</p>
-      <p>Is this a must have? {item.isTopItem ? 'Yes' : 'No'} </p>
-      <p>Has this Item Been Purchased? {item.isPurchased ? 'Yes' : 'No'}</p>
-    </div>
+    <>
+      <div>
+        <h1>WishList Item: {WSItem.itemName}</h1>
+        {ItemImage}
+        <p>Price: {WSItem.itemPrice}</p>
+        <p>Any preferences? -- {WSItem.itemDescription}</p>
+        <p>Is this a must have? {WSItem.isTopItem ? 'Yes' : 'No'} </p>
+        <p>Has this Item Been Purchased? {WSItem.isPurchased ? 'Yes' : 'No'}</p>
+      </div>
+      <button type="button" onClick={() => setItem(WSItem)}>
+        <Link to="/UpdateWishListItem">Edit WishList Item</Link>{' '}
+      </button>
+    </>
   );
 }

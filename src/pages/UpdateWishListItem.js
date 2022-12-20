@@ -1,83 +1,93 @@
 import React, { useRef } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-export default function AddWishListItem({ member }) {
-  const history = useHistory();
+export default function UpdateWishListItem({ item, setItem }) {
   const ItemName = useRef();
   const ItemDescription = useRef();
   const ItemPrice = useRef();
   const ItemImage = useRef();
   const IsTopItem = useRef();
-  console.log(member);
+  console.log(item);
 
-  const AddItemToWishList = async (e) => {
+  const UpdateItem = async (e) => {
     e.preventDefault();
-
-    const newItem = {
+    console.log(IsTopItem);
+    const updatedItem = {
       ItemName: ItemName.current.value,
       ItemDescription: ItemDescription.current.value,
       ItemPrice: ItemPrice.current.value,
       ItemImage: ItemImage.current.value,
       IsTopItem: false,
       IsPurchased: false,
+      WishListItemId: item.wishListItemId,
     };
 
     const fetchOption = {
-      method: 'POST',
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(newItem),
+      body: JSON.stringify(updatedItem),
     };
 
-    const res = await fetch(
-      `https://localhost:7041/api/WishListItem/CreateWishListItem/${member.familyMemberId}`,
-      fetchOption,
+    fetch('https://localhost:7041/api/WishListItem', fetchOption).then(
+      (data) => {
+        setItem(data);
+      },
     );
-    await res.json();
-    history.push('/FamilyMember');
   };
 
   return (
     <>
-      <form className="addWishListItem">
-        <h2 className="addWishListItem__title">Add To Your WishList</h2>
+      <form className="form-group">
+        <h2 className="addWishListItem__title">
+          Update This Members WishList Item
+        </h2>
         <fieldset>
           <div className="form-group">
-            <label htmlFor="ItemName">Enter your wishlist Item:</label>
-            <input required ref={ItemName} type="text" placeholder="Name" />
+            <label htmlFor="ItemName">Enter the wishlist Item:</label>
+            <input
+              required
+              ref={ItemName}
+              type="text"
+              placeholder={item?.itemName}
+            />
           </div>
         </fieldset>
         <fieldset>
           <div className="form-group">
             <label htmlFor="ItemDescription">Anything Special to Know?</label>
-            <input type="text" ref={ItemDescription} />
+            <input
+              type="text"
+              ref={ItemDescription}
+              placeholder={item?.ItemDescription}
+            />
           </div>
         </fieldset>
         <fieldset>
           <div className="form-group">
             <label htmlFor="ItemPrice">Price:</label>
-            <input type="text" ref={ItemPrice} />
+            <input type="text" ref={ItemPrice} placeholder={item?.itemPrice} />
           </div>
         </fieldset>
         <fieldset>
           <div className="form-group">
             <label htmlFor="ItemImage">Inert Image URL:</label>
-            <input type="text" ref={ItemImage} />
+            <input type="text" ref={ItemImage} placeholder={item?.itemImage} />
           </div>
         </fieldset>
         <fieldset>
           <div className="form-group">
             <label htmlFor="IsTopItem">Is This an item you really want??</label>
-            <input type="checkbox" ref={IsTopItem} />
+            <input
+              type="checkbox"
+              ref={IsTopItem}
+              placeholder={item?.IsTopItem}
+            />
           </div>
         </fieldset>
-        <button
-          type="submit"
-          className="btn btn-primary"
-          onClick={AddItemToWishList}
-        >
-          <Link to="/Home">Add item</Link>
+        <button type="submit" className="btn btn-primary" onClick={UpdateItem}>
+          <Link to="/FamilyMember">Update Item</Link>
         </button>
       </form>
     </>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 export default function Home({ user }) {
   const [members, setMembers] = useState([]);
+  const [families, setFamilies] = useState([]);
 
   useEffect(() => {
     fetch('https://localhost:7041/api/FamilyMember')
@@ -10,7 +11,15 @@ export default function Home({ user }) {
         setMembers(data);
       });
   }, []);
-  console.log(members);
+
+  useEffect(() => {
+    fetch('https://localhost:7041/api/Family')
+      .then((res) => res.json())
+      .then((data) => {
+        setFamilies(data);
+      });
+  }, []);
+  console.log(families);
 
   return (
     <>
@@ -23,6 +32,14 @@ export default function Home({ user }) {
       </div>
       <h1>All Families:</h1>{' '}
       <div>
+        <ul>
+          <li>
+            {families.map((f) => f.familyName)}
+            <ul>
+              <li>{members.map((m) => m.familyMemberName != null)}</li>
+            </ul>
+          </li>
+        </ul>
         {members
           .sort((a, b) => a.familyId - b.familyId)
           .map((mem) => mem.familyMemberName)}

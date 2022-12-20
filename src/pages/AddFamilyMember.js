@@ -1,15 +1,13 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-export default function AddFamilyMember({ famId }) {
+export default function AddFamilyMember({ setMember }) {
   const [familyId, setFamilyId] = useState(1);
   const [families, setFamily] = useState([]);
   const FamilyMemberName = useRef();
   const FamilyMemberAge = useRef();
   const FamilyMemberGender = useRef();
-  const history = useHistory();
 
-  const [member, setMember] = useState({});
   const clickHandle = (e) => {
     setFamilyId(e.target.value);
   };
@@ -24,7 +22,6 @@ export default function AddFamilyMember({ famId }) {
 
   const AddMemberToFamily = async (e) => {
     e.preventDefault();
-    console.log(famId);
     const newMember = {
       FamilyMemberName: FamilyMemberName.current.value,
       FamilyMemberAge: FamilyMemberAge.current.value,
@@ -40,12 +37,7 @@ export default function AddFamilyMember({ famId }) {
       body: JSON.stringify(newMember),
     };
 
-    const res = await fetch(
-      'https://localhost:7041/api/FamilyMember',
-      fetchOption,
-    );
-    await res.json();
-    history.push('/AddWishListItem');
+    fetch('https://localhost:7041/api/FamilyMember', fetchOption).then((data) => setMember(data));
   };
   console.log(families);
   return (
@@ -74,40 +66,19 @@ export default function AddFamilyMember({ famId }) {
               type="text"
               className="form-control"
               placeholder="Name"
-              onChange={(e) => {
-                const copy = { ...member };
-                copy.FamilyMemberName = e.target.value;
-                setMember(copy);
-              }}
             />
           </div>
         </fieldset>
         <fieldset>
           <div className="form-group">
             <label htmlFor="FamilyMemberAge">Age:</label>
-            <input
-              type="text"
-              ref={FamilyMemberAge}
-              onChange={(e) => {
-                const copy = { ...member };
-                copy.FamilyMemberAge = e.target.value;
-                setMember(copy);
-              }}
-            />
+            <input type="text" ref={FamilyMemberAge} />
           </div>
         </fieldset>
         <fieldset>
           <div className="form-group">
             <label htmlFor="FamilyMemberGender">Gender:</label>
-            <input
-              type="text"
-              ref={FamilyMemberGender}
-              onChange={(e) => {
-                const copy = { ...member };
-                copy.FamilyMemberGender = e.target.value;
-                setMember(copy);
-              }}
-            />
+            <input type="text" ref={FamilyMemberGender} />
           </div>
         </fieldset>
         <button
@@ -115,7 +86,7 @@ export default function AddFamilyMember({ famId }) {
           className="btn btn-primary"
           onClick={AddMemberToFamily}
         >
-          <Link to="/AddWishListItem">Add Member</Link>
+          <Link to="/AllFamilies">Add Member</Link>
         </button>
       </form>
     </>
