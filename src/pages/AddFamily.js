@@ -27,7 +27,7 @@ export default function AddFamily() {
 
   return (
     <>
-      <div className="text-center mt-5">
+      <div className="infoDiv">
         <h1>Family Name</h1>
         <form>
           <label htmlFor="FamilyName"> </label> <br />

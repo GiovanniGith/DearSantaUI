@@ -17,7 +17,10 @@ export default function AddWishListItem({ member }) {
       ItemName: ItemName.current.value,
       ItemDescription: ItemDescription.current.value,
       ItemPrice: ItemPrice.current.value,
-      ItemImage: ItemImage.current.value,
+      ItemImage:
+        ItemImage.current.value !== ''
+          ? ItemImage.current.value
+          : 'https://tse2.mm.bing.net/th?id=OIP.wnnsQ_etSItpbg3vr7Mx7QHaHa&pid=Api&P=0',
       IsTopItem: false,
       IsPurchased: false,
     };

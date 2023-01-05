@@ -1,3 +1,41 @@
-body {
-  background-color: lightblue !important;
+.background {
+  background-image: url("/src/components/imgs/Christmas-Background-HD.jpg.crdownload");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.navbar__item {
+  flex-basis: 10%;
+  font-family:Georgia, 'Times New Roman', Times, serif;
+  list-style-type: none;
+  padding: 7px;
+  background-color:rgb(155, 107, 107);
+  border-radius: 9px;
+
+}
+
+.mainContainer {
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
+  padding-top: .5rem;   
+}
+
+.allFamiliesContainer {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.infoDiv{
+  background-color: lightslategrey;
+}
+
+h1 {
+  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
 }

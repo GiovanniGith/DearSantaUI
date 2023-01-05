@@ -15,14 +15,18 @@ function Initialize() {
 
   return (
     <>
-      {user ? (
-        <>
-          {' '}
-          <NavBar /> <Routes user={user} />{' '}
-        </>
-      ) : (
-        <LogIn />
-      )}
+      <div className="background">
+        {user ? (
+          <>
+            <div className="mainContainer">
+              <NavBar />
+              <Routes user={user} />
+            </div>
+          </>
+        ) : (
+          <LogIn />
+        )}
+      </div>
     </>
   );
 }

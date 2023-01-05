@@ -22,12 +22,18 @@ export default function Routes({ user }) {
   return (
     <div>
       <Switch>
-        <Route exact path="/" component={() => <Home user={user} />} />
+        <Route
+          exact
+          path="/"
+          component={() => <Home user={user} setMember={setMember} />}
+        />
         <Route exact path="/AddFamily" component={() => <AddFamily />} />
         <Route
           exact
           path="/AddFamilyMember"
-          component={() => <AddFamilyMember setMember={setMember} />}
+          component={() => (
+            <AddFamilyMember setMember={setMember} famId={famId} />
+          )}
         />
         <Route
           path="/AddWishListItem"
@@ -41,7 +47,10 @@ export default function Routes({ user }) {
           path="/FamilyView"
           component={() => <FamilyView setMember={setMember} famId={famId} />}
         />
-        <Route path="/UserProfile" component={() => <UserProfile />} />
+        <Route
+          path="/UserProfile"
+          component={() => <UserProfile user={user} />}
+        />
         <Route
           path="/FamilyMember"
           component={() => (
