@@ -30,6 +30,9 @@
   flex-wrap: wrap;
   flex-direction: row;
   justify-content: space-evenly;
+  background-image: url("/src/components/imgs/scroll2.png");
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .infoDiv{
@@ -38,4 +41,21 @@
 
 h1 {
   font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+}
+
+.familyMemberView {
+  text-align: center;
+  margin-left: 20%;
+  margin-right: 20%;
+  background-color: rgb(198, 189, 189);
+  border-radius: 2px;
+  border-color: black;
+}
+
+.userProfileView {
+  padding-top: 5%;
+  margin-left: 35%;
+  margin-right: 35%;
+  background-color: rgb(198, 189, 189);
+  text-align: center;
 }

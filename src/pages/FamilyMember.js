@@ -30,7 +30,7 @@ export default function FamilyMember({ member, setItemId }) {
 
   return (
     <>
-      <div className="text-center mt-5">
+      <div className="familyMemberView">
         <h1>Family Member</h1>
         <h2>{famMember.length > 0 ? famMember[0].familyMemberName : ''}</h2>
         <p>

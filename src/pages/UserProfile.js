@@ -12,7 +12,7 @@ export default function UserProfile({ user }) {
 
   return (
     <>
-      <div>
+      <div className="userProfileView">
         <p>Hi {user.displayName}</p>
         {UserProfileImage}
         <Link to="/AddFamily">
